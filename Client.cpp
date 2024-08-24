@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <winsock2.h>
 #include <ws2tcpip.h> // For inet_pton
 
@@ -7,7 +8,25 @@
 
 int main(int argc, char* argv[]) {
 
-    std::cout << "This is the Client." << std::endl;
+    std::cout << "Client started ... " << std::endl;
+    
+    const char *ip, *port;
+    if (argc == 3) // Expect IP & port number
+    {
+        ip = argv[1];
+        port = argv[2];
+    }
+    else // defaults
+    {
+        std::cout << "Default parameters used ... " << std::endl;
+        ip = "127.0.0.1"; // localhost (IPv4 loopback address)
+        port = "27016";
+    }
+    std::cout << "IP to connect to ..... " << ip << std::endl;
+    std::cout << "Port to connect to ... " << port << std::endl;
+
+    // Convert port
+    unsigned short  usPort = (unsigned short) std::stoi(port);
 
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -24,24 +43,11 @@ int main(int argc, char* argv[]) {
 
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
-    // Set to localhost (IPv4 loopback address)
-    if (inet_pton(AF_INET, "127.0.0.1", &(serverAddress.sin_addr)) != 1) {
+    if (inet_pton(AF_INET, ip, &(serverAddress.sin_addr)) != 1) {
         std::cerr << "Error setting address to localhost." << std::endl;
         return 1;
     }
-    serverAddress.sin_port = htons(27016);
-
-
-    // Convert the binary IP address to a string
-    char ipAddressStr[INET_ADDRSTRLEN]; // Buffer for IP address string
-    if (inet_ntop(AF_INET, &(serverAddress.sin_addr), ipAddressStr, INET_ADDRSTRLEN)) {
-        std::cout << "IP Address: " << ipAddressStr << std::endl;
-    }
-    else {
-        std::cerr << "Error converting IP address to string." << std::endl;
-    }
-    // Convert the port number to a string
-    std::cout << "Port: " << ntohs(serverAddress.sin_port) << std::endl;
+    serverAddress.sin_port = htons(usPort);
 
     // Connect to the server
     if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) {
