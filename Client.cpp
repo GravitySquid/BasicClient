@@ -105,8 +105,13 @@ int main(int argc, char* argv[]) {
 		Sleep(3000);
 
 		// Send data to the server
-		std::string msg = std::format("{}: Hey! Server! # {}",clientGuid,i++);
-		const char* message = msg.c_str();
+		//std::string msgSend = std::format("{}: Hey! Server! # {}",clientGuid,i++);
+		std::string msgSend;
+		std::cout << "\033[32m" << "ENTER MESSAGE FOR SERVER: > " << "\033[0m";
+		std::getline(std::cin, msgSend);
+
+
+		const char* message = msgSend.c_str();
 		send(clientSocket, message, strlen(message), 0);
 		std::cout << "Sent to server: " << message << std::endl;
 
