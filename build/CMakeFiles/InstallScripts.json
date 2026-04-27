@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/squid/git/BasicClient/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,3 @@
+/home/squid/git/BasicClient/build/CMakeFiles/Client.dir
+/home/squid/git/BasicClient/build/CMakeFiles/edit_cache.dir
+/home/squid/git/BasicClient/build/CMakeFiles/rebuild_cache.dir

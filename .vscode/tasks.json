@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake: Configure",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-B",
+                "${workspaceFolder}/build",
+                "-S",
+                "${workspaceFolder}"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "osx": {
+                "command": "cmake"
+            },
+            "windows": {
+                "command": "cmake"
+            },
+            "linux": {
+                "command": "cmake"
+            }
+        },
+        {
+            "label": "CMake: Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "CMake: Configure",
+            "problemMatcher": ["$gcc", "$msCompile"],
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "CMake: Clean",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "clean"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Run Client (localhost)",
+            "type": "shell",
+            "linux": {
+                "command": "${workspaceFolder}/build/Client",
+                "args": ["127.0.0.1", "27016"]
+            },
+            "windows": {
+                "command": "${workspaceFolder}\\build\\Debug\\Client.exe",
+                "args": ["127.0.0.1", "27016"]
+            },
+            "osx": {
+                "command": "${workspaceFolder}/build/Client",
+                "args": ["127.0.0.1", "27016"]
+            },
+            "group": "test",
+            "dependsOn": "CMake: Build",
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}

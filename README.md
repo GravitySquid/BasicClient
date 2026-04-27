@@ -1,4 +1,4 @@
 Basic Client
 ============
 
-Basic socket server client for Windows, using winsock2.
+Basic socket server client for Windows or Linux.
